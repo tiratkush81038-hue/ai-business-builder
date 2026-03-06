@@ -1,48 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AI Business Builder Chatbot</title>
-  <style>
-    body{
-      font-family: Arial;
-      background:#0f172a;
-      color:white;
-      text-align:center;
-      padding:30px;
-    }
-    #chatbox{
-      width:400px;
-      height:400px;
-      border:2px solid #22c55e;
-      margin:0 auto;
-      padding:10px;
-      overflow-y:auto;
-      background:#1e293b;
-    }
-    input{
-      padding:10px;
-      width:300px;
-      margin-top:10px;
-    }
-    button{
-      padding:10px 20px;
-      background:#22c55e;
-      border:none;
-      color:white;
-      cursor:pointer;
-      margin-left:5px;
-    }
-    .user{
-      text-align:right;
-      color:#f87171;
-      margin:5px 0;
-    }
-    .bot{
-      text-align:left;
-      color:#facc15;
-      margin:5px 0;
-    }
-  </style>
+<title>AI Business Builder</title>
+<style>
+body{
+  font-family: Arial;
+  background:#0f172a;
+  color:white;
+  text-align:center;
+  padding:30px;
+}
+#chatbox{
+  width:400px;
+  height:400px;
+  border:2px solid #22c55e;
+  margin:0 auto;
+  padding:10px;
+  overflow-y:auto;
+  background:#1e293b;
+}
+input{
+  padding:10px;
+  width:300px;
+  margin-top:10px;
+}
+button{
+  padding:10px 20px;
+  background:#22c55e;
+  border:none;
+  color:white;
+  cursor:pointer;
+  margin-left:5px;
+}
+.user{
+  text-align:right;
+  color:#f87171;
+  margin:5px 0;
+}
+.bot{
+  text-align:left;
+  color:#facc15;
+  margin:5px 0;
+}
+</style>
 </head>
 <body>
 
@@ -53,35 +53,51 @@
 <button onclick="sendMessage()">Send</button>
 
 <script>
+// Chatbox logic
 let chatbox = document.getElementById("chatbox");
 
-function sendMessage(){
+async function sendMessage(){
   let userText = document.getElementById("userInput").value;
-  if(userText.trim() === "") return;
+  if(userText.trim()==="") return;
 
   // Show user message
   chatbox.innerHTML += '<div class="user">You: '+userText+'</div>';
 
-  // Dummy AI response (replace later with real AI API)
-  let botResponse = generateResponse(userText);
+  // AI Response
+  let botResponse = await getAIResponse(userText);
   chatbox.innerHTML += '<div class="bot">AI: '+botResponse+'</div>';
 
   // Scroll to bottom
   chatbox.scrollTop = chatbox.scrollHeight;
-  document.getElementById("userInput").value = "";
+  document.getElementById("userInput").value="";
 }
 
-// Dummy AI logic
-function generateResponse(input){
-  let responses = [
+// Dummy AI logic for free testing
+async function getAIResponse(input){
+  // Replace this with real API call later
+  let responses=[
     "You can start a digital marketing agency based on "+input,
-    "Try creating a niche online course around "+input,
+    "Create a niche online course around "+input,
     "Launch a dropshipping store focused on "+input,
-    "Consider offering freelance services in "+input,
+    "Offer freelance services in "+input,
     "Build a content creation brand around "+input
   ];
   return responses[Math.floor(Math.random()*responses.length)];
 }
+
+/* --- Future upgrade: Real AI (Google Gemini) ---
+Replace getAIResponse() with API call:
+
+async function getAIResponse(input){
+  let response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=YOUR_API_KEY",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({contents:[{parts:[{text:"Generate a business plan for "+input}]}]})
+  });
+  let data = await response.json();
+  return data.candidates[0].content.parts[0].text;
+}
+*/
 </script>
 
 </body>
