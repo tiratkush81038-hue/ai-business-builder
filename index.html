@@ -1,19 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AI Business Builder</title>
+  <title>AI Business Builder Chatbot</title>
   <style>
     body{
       font-family: Arial;
       background:#0f172a;
       color:white;
       text-align:center;
-      padding:40px;
+      padding:30px;
+    }
+    #chatbox{
+      width:400px;
+      height:400px;
+      border:2px solid #22c55e;
+      margin:0 auto;
+      padding:10px;
+      overflow-y:auto;
+      background:#1e293b;
     }
     input{
       padding:10px;
       width:300px;
-      margin-top:20px;
+      margin-top:10px;
     }
     button{
       padding:10px 20px;
@@ -21,43 +30,57 @@
       border:none;
       color:white;
       cursor:pointer;
-      margin-left:10px;
+      margin-left:5px;
     }
-    #result{
-      margin-top:20px;
-      font-size:18px;
+    .user{
+      text-align:right;
+      color:#f87171;
+      margin:5px 0;
+    }
+    .bot{
+      text-align:left;
       color:#facc15;
+      margin:5px 0;
     }
   </style>
 </head>
-
 <body>
 
-<h1>AI Business Idea Generator</h1>
-<p>Enter your skills and get a business idea</p>
+<h1>AI Business Builder Chatbot</h1>
+<div id="chatbox"></div>
 
-<input id="skill" placeholder="example: marketing, coding">
-<button onclick="generate()">Generate</button>
-
-<div id="result"></div>
+<input id="userInput" placeholder="Enter your business idea">
+<button onclick="sendMessage()">Send</button>
 
 <script>
-function generate(){
-  let skill = document.getElementById("skill").value;
-  
-  // Random ideas for now
-  let ideas = [
-    "Start a digital marketing agency",
-    "Create a niche online course",
-    "Launch a dropshipping store",
-    "Build a freelance service business",
-    "Create a content creation brand"
+let chatbox = document.getElementById("chatbox");
+
+function sendMessage(){
+  let userText = document.getElementById("userInput").value;
+  if(userText.trim() === "") return;
+
+  // Show user message
+  chatbox.innerHTML += '<div class="user">You: '+userText+'</div>';
+
+  // Dummy AI response (replace later with real AI API)
+  let botResponse = generateResponse(userText);
+  chatbox.innerHTML += '<div class="bot">AI: '+botResponse+'</div>';
+
+  // Scroll to bottom
+  chatbox.scrollTop = chatbox.scrollHeight;
+  document.getElementById("userInput").value = "";
+}
+
+// Dummy AI logic
+function generateResponse(input){
+  let responses = [
+    "You can start a digital marketing agency based on "+input,
+    "Try creating a niche online course around "+input,
+    "Launch a dropshipping store focused on "+input,
+    "Consider offering freelance services in "+input,
+    "Build a content creation brand around "+input
   ];
-  
-  // Random pick
-  let random = ideas[Math.floor(Math.random() * ideas.length)];
-  
-  document.getElementById("result").innerHTML = "<h3>Business Idea:</h3>" + random;
+  return responses[Math.floor(Math.random()*responses.length)];
 }
 </script>
 
