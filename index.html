@@ -1,57 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>AI Business Generator</title>
+<title>AI Business Builder</title>
+<style>
+body{
+font-family: Arial;
+background:#0f172a;
+color:white;
+text-align:center;
+padding:40px;
+}
+
+input{
+padding:10px;
+width:300px;
+}
+
+button{
+padding:10px 20px;
+background:#22c55e;
+border:none;
+color:white;
+cursor:pointer;
+}
+
+#result{
+margin-top:20px;
+}
+</style>
 </head>
 
 <body>
 
-<h2>AI Business Builder</h2>
+<h1>AI Business Idea Generator</h1>
+<p>Enter your skills and get a business idea</p>
 
-<input id="idea" placeholder="Enter your business idea">
+<input id="skill" placeholder="example: marketing, coding">
 
 <button onclick="generate()">Generate</button>
 
-<p id="result"></p>
+<div id="result"></div>
 
 <script>
 
-async function generate(){
+function generate(){
 
-let idea=document.getElementById("idea").value;
+let skill=document.getElementById("skill").value;
 
-let response=await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=YOUR_API_KEY",{
+let ideas=[
+"Start a digital marketing agency",
+"Create a niche online course",
+"Launch a dropshipping store",
+"Build a freelance service business",
+"Create a content creation brand"
+];
 
-method:"POST",
+let random=ideas[Math.floor(Math.random()*ideas.length)];
 
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({
-
-contents:[{
-
-parts:[{
-
-text:"Generate business name and business plan for "+idea
-
-}]
-
-}]
-
-})
-
-});
-
-let data=await response.json();
-
-document.getElementById("result").innerText=data.candidates[0].content.parts[0].text;
+document.getElementById("result").innerHTML=
+"<h3>Business Idea:</h3>"+random;
 
 }
 
 </script>
 
 </body>
-
 </html>
